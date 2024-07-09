@@ -1,0 +1,1 @@
+export type Success<T> = { data: T };
