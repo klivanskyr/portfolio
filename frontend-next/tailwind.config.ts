@@ -8,7 +8,11 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        darkGray: '#1a1a1a',
+      },
+    },
     fontFamily: {
       Inter_Tight: ['Inter_Tight'],
     },

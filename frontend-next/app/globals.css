@@ -10,8 +10,8 @@
   --border-color: black;
 }
 
-[data-theme='dark'] {
-  --bg-color: black;
+.dark {
+  --bg-color: #1a1a1a;
   --text-color: white;
   --border-color: white;
 }
