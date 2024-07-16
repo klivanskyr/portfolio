@@ -4,8 +4,16 @@ import { useEffect, useState } from 'react';
 
 import fetcher from '@/utils/fetcher';
 
+interface AboutData {
+    firstName: string;
+    lastName: string;
+    title: string;
+    description: string;
+    imageUrl: string;
+}
+
 export default function About() {
-    const [about, setAbout] = useState<string>('');
+    const [about, setAbout] = useState<AboutData>({ firstName: '', lastName: '', title: '', description: '', imageUrl: '' });
     const [loading, setLoading] = useState<boolean>(false);
 
     const fetchAbout = async () => {
@@ -23,8 +31,15 @@ export default function About() {
             console.error(response.error.message);
             return;
         }
-        console.log(response.data);
-        setAbout(response.data as string);
+        const data: AboutData[] = response.data as AboutData[];
+    
+        setAbout({ 
+            firstName: data[0].firstName,
+            lastName: data[0].lastName,
+            title: data[0].title,
+            description: data[0].description,
+            imageUrl: data[0].imageUrl
+        });
     }
 
     useEffect(() => {
@@ -36,7 +51,13 @@ export default function About() {
     return (
         <div>
             <h1>About</h1>
-            <h2>{about || 'blank'}</h2>
+            <div>
+                <h1>{about.firstName}</h1>
+                <h1>{about.lastName}</h1>
+                <h1>{about.title}</h1>
+                <p>{about.description}</p>
+                <img src={about.imageUrl} alt='profile' />
+            </div>
         </div>
     )
 }
