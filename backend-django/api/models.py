@@ -10,3 +10,12 @@ class Project(models.Model):
     def __str__(self):
         return self.title
 
+class About(models.Model):
+    firstName = models.CharField(max_length=100)
+    lastName = models.CharField(max_length=100)
+    title = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+    imageUrl = models.URLField(blank=True)
+
+    def __str__(self):
+        return self.firstName + " " + self.lastName

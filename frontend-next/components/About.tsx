@@ -9,7 +9,7 @@ export default function About() {
     const [loading, setLoading] = useState<boolean>(false);
 
     const fetchAbout = async () => {
-        const url = `${process.env.NEXT_PUBLIC_API_URL}/about`;
+        const url = `${process.env.NEXT_PUBLIC_DJANGO_API_DOMAIN}/api/about`;
         const params = {
             method: 'GET',
             headers: {
@@ -23,6 +23,7 @@ export default function About() {
             console.error(response.error.message);
             return;
         }
+        console.log(response.data);
         setAbout(response.data as string);
     }
 
