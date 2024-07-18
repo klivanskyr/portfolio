@@ -49,7 +49,7 @@ export default function About() {
     }, []);
 
     return (
-        <div>
+        <div id='about'>
             <h1>About</h1>
             <div>
                 <h1>{about.firstName}</h1>
