@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from 'react';
 
-import fetcher from '@/utils/fetcher';
+import { ImageTextLayout1 } from '@/components';
+import { fetcher } from '@/utils';
+
 
 interface AboutData {
     firstName: string;
@@ -12,7 +14,7 @@ interface AboutData {
     imageUrl: string;
 }
 
-export default function About() {
+export default function About(): JSX.Element {
     const [about, setAbout] = useState<AboutData>({ firstName: '', lastName: '', title: '', description: '', imageUrl: '' });
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -44,20 +46,22 @@ export default function About() {
 
     useEffect(() => {
         setLoading(true);
-        fetchAbout();
-        setLoading(false);
+        fetchAbout().then(() => setLoading(false));
     }, []);
 
+    
+
     return (
-        <div id='about'>
-            <h1>About</h1>
-            <div>
-                <h1>{about.firstName}</h1>
-                <h1>{about.lastName}</h1>
-                <h1>{about.title}</h1>
-                <p>{about.description}</p>
-                <img src={about.imageUrl} alt='profile' />
-            </div>
+        <div className='bg-red-100 min-w-screen min-h-screen'>
+            <ImageTextLayout1 imageUrl={about.imageUrl} rows={[
+                    <div className='flex flex-row my-0.5'>
+                        <h1 className='mx-0.5'>{about.firstName}</h1>
+                        <h1 className='mx-0.5'>{about.lastName}</h1>
+                    </div>,
+                    <h1 className='my-0.5'>{about.title}</h1>,
+                    <p className='my-0.5 '>{about.description}</p>,
+                ]} />
         </div>
+        
     )
 }
