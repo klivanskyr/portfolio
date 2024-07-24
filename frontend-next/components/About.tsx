@@ -54,12 +54,12 @@ export default function About(): JSX.Element {
     return (
         <div className='bg-red-100 min-w-screen min-h-screen'>
             <ImageTextLayout1 imageUrl={about.imageUrl} rows={[
-                    <div className='flex flex-row my-0.5'>
+                    <div className='flex flex-row my-0.5' key='name'>
                         <h1 className='mx-0.5'>{about.firstName}</h1>
                         <h1 className='mx-0.5'>{about.lastName}</h1>
                     </div>,
-                    <h1 className='my-0.5'>{about.title}</h1>,
-                    <p className='my-0.5 '>{about.description}</p>,
+                    <h1 className='my-0.5' key='title'>{about.title}</h1>,
+                    <p className='my-0.5' key='description'>{about.description}</p>,
                 ]} />
         </div>
         
