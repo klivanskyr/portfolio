@@ -50,7 +50,7 @@ export default function Navbar(): JSX.Element {
             </div>
             
             <motion.div
-                className={`${!open ? 'hidden' : 'fixed top-0 right-0 bg-white dark:bg-darkGray dark:border-l dark:border-slate-500 shadow-xl p-2 w-3/5 h-full flex flex-col justify-between'}`} 
+                className={`${!open ? 'hidden' : 'fixed top-0 right-0 bg-white dark:border-l dark:border-slate-500 shadow-xl p-2 w-3/5 h-full flex flex-col justify-between'}`} 
                 initial={{ x: '200%'}}
                 animate={{ x: open ? 0 : '200%' }}
                 transition={{ duration: 0.5 }}

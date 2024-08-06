@@ -1,8 +1,8 @@
-'use client';
+'use server';
 
 import { Navbar, About, Projects, Skills } from "@/components";
 
-export default function Home(): JSX.Element {
+export default async function Home() {
   return (
     <div className='flex flex-col'>
       <Navbar />

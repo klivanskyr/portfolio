@@ -1,6 +1,5 @@
-'use client';
+'use server';
 
-import { useEffect, useState } from 'react';
 import { Skeleton } from '@mantine/core';
 
 import { ImageTextLayout1 } from '@/components';
@@ -15,60 +14,37 @@ interface AboutData {
     imageUrl: string;
 }
 
-export default function About(): JSX.Element {
-    const [about, setAbout] = useState<AboutData>({ firstName: '', lastName: '', title: '', description: '', imageUrl: '' });
-    const [loading, setLoading] = useState<boolean>(true);
-
-    const fetchAbout = async () => {
-        const url = `${process.env.NEXT_PUBLIC_DJANGO_API_DOMAIN}/api/abouts`;
-        const params = {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            cache: 'no-cache',
-        };
-
-        const response = await fetcher(url, params);
-        if ('error' in response) {
-            console.error(response.error.message);
-            return;
+async function fetchAbout() {
+    const url = `${process.env.NEXT_PUBLIC_DJANGO_API_DOMAIN}/api/abouts`;
+    const params = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
         }
-        const data: AboutData[] = response.data as AboutData[];
-    
-        setAbout({ 
-            firstName: data[0].firstName,
-            lastName: data[0].lastName,
-            title: data[0].title,
-            description: data[0].description,
-            imageUrl: data[0].imageUrl
-        });
+    };
+
+    const response = await fetcher(url, params);
+    if ('error' in response) {
+        console.error(response.error.message);
+        return;
     }
+    const data: AboutData[] = response.data as AboutData[];
+    return data[0];
+}
 
-    useEffect(() => {
-        setLoading(true);
-        fetchAbout().then(() => setLoading(false));
-    }, []);
+export default async function About() {
+    const about = await fetchAbout();
 
-    
-    console.log(loading);
+    if (!about) return <></>;
     return (
-        <div className='min-w-screen min-h-screen'>
+        <div id='About' className='min-w-screen'>
             <ImageTextLayout1 imageUrl={about.imageUrl} rows={[
                     <div className='flex flex-row my-0.5' key='name'>
-                        <Skeleton className='mx-0.5' visible={loading}>
-                            {about.firstName}
-                        </Skeleton>
-                        <Skeleton className='mx-0.5' visible={loading}>
-                            {about.lastName}
-                        </Skeleton>
+                        <div className='mx-0.5'>{about.firstName}</div>
+                        <div className='mx-0.5'>{about.lastName}</div>
                     </div>,
-                    <Skeleton className='my-0.5' key='title'>
-                        {about.title}
-                    </Skeleton>,
-                    <Skeleton className='my-0.5' key='description'>
-                        {about.description}
-                    </Skeleton>,
+                    <div className='my-0.5' key='title'>{about.title}</div>,
+                    <div className='my-0.5' key='description'>{about.description}</div>,
                 ]} />
         </div>
         

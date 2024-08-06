@@ -1,57 +1,35 @@
-import { Carousel } from '@mantine/carousel';
-import { useMediaQuery } from '@mantine/hooks';
-import { Paper, Text, Title, Button, useMantineTheme, rem, Image } from '@mantine/core';
+'use client';
 
-export interface CardProps {
-  image: string;
-  title: string;
-  description: string;
-  custom?: JSX.Element;
-}
+import { Button } from "@mantine/core";
+import { useState } from "react";
 
-function Card({ image, title, description, custom }: CardProps) {
+export default function CardCarousel({ cards }: { cards: JSX.Element[] }) {
+  const [page, setPage] = useState<number>(1);
+
+  function decrementPage() {
+    if (page - 1 === 0) {
+      setPage(1);
+    } else {
+      setPage(page - 1);
+    }
+  }
+
+  function incrementPage() {
+    setPage(page + 1);
+  }
+
   return (
-    <Paper
-      shadow="md"
-      p="xl"
-      radius="md"
-    >
-      <div>
-        <Image src={image} alt={title} />
-        <Text size="xs">
-          {title}
-        </Text>
-        <Title order={3}>
-          {description}
-        </Title>
-        {custom}
+    <div>
+      <div className="flex flex-row max-w-screen overflow-clip">
+        {cards.map((card, i) => 
+          <div className='mx-2' key={i}>{card}</div>
+        )}
       </div>
-      <Button variant="white" color="dark">
-        Read article
-      </Button>
-    </Paper>
-  );
-}
-
-
-export default function CardsCarousel({ data }: { data: CardProps[] }) {
-  const theme = useMantineTheme();
-  const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
-
-  const slides = data.map((item) => (
-    <Carousel.Slide key={item.title}>
-      <Card {...item} />
-    </Carousel.Slide>
-  ));
-
-  return (
-    <Carousel
-      slideSize={{ base: '100%', sm: '50%' }}
-      slideGap={{ base: rem(2), sm: 'xl' }}
-      align="start"
-      slidesToScroll={mobile ? 1 : 2}
-    >
-      {slides}
-    </Carousel>
-  );
+      <div className="flex flex-row">
+        <Button className="m-1" onClick={decrementPage}>{"<"}</Button>
+        <p className="m-1">{page}</p>
+        <Button className="m-1" onClick={incrementPage}>{">"}</Button>
+      </div>
+    </div>
+  )
 }
