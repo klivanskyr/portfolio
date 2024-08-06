@@ -2,7 +2,7 @@ import type { Config } from "tailwindcss";
 import { Inter_Tight } from "next/font/google";
 
 const config: Config = {
-  darkMode: 'class',
+  darkMode: 'media',
   content: [
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Skeleton } from '@mantine/core';
 
 import { ImageTextLayout1 } from '@/components';
 import { fetcher } from '@/utils';
@@ -16,10 +17,10 @@ interface AboutData {
 
 export default function About(): JSX.Element {
     const [about, setAbout] = useState<AboutData>({ firstName: '', lastName: '', title: '', description: '', imageUrl: '' });
-    const [loading, setLoading] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true);
 
     const fetchAbout = async () => {
-        const url = `${process.env.NEXT_PUBLIC_DJANGO_API_DOMAIN}/api/about`;
+        const url = `${process.env.NEXT_PUBLIC_DJANGO_API_DOMAIN}/api/abouts`;
         const params = {
             method: 'GET',
             headers: {
@@ -50,16 +51,24 @@ export default function About(): JSX.Element {
     }, []);
 
     
-
+    console.log(loading);
     return (
-        <div className='bg-red-100 min-w-screen min-h-screen'>
+        <div className='min-w-screen min-h-screen'>
             <ImageTextLayout1 imageUrl={about.imageUrl} rows={[
                     <div className='flex flex-row my-0.5' key='name'>
-                        <h1 className='mx-0.5'>{about.firstName}</h1>
-                        <h1 className='mx-0.5'>{about.lastName}</h1>
+                        <Skeleton className='mx-0.5' visible={loading}>
+                            {about.firstName}
+                        </Skeleton>
+                        <Skeleton className='mx-0.5' visible={loading}>
+                            {about.lastName}
+                        </Skeleton>
                     </div>,
-                    <h1 className='my-0.5' key='title'>{about.title}</h1>,
-                    <p className='my-0.5' key='description'>{about.description}</p>,
+                    <Skeleton className='my-0.5' key='title'>
+                        {about.title}
+                    </Skeleton>,
+                    <Skeleton className='my-0.5' key='description'>
+                        {about.description}
+                    </Skeleton>,
                 ]} />
         </div>
         

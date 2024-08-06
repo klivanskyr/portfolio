@@ -1,6 +1,6 @@
 'use client';
 
-import { Navbar, About, Projects } from "@/components";
+import { Navbar, About, Projects, Skills } from "@/components";
 
 export default function Home(): JSX.Element {
   return (
@@ -8,7 +8,7 @@ export default function Home(): JSX.Element {
       <Navbar />
       <About />
       <Projects />
-      {/* <Skills /> */}
+      <Skills />
       {/* <Experience /> */}
       {/* <Testimonials /> */}
       {/* <Contact /> */}
