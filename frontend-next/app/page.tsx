@@ -8,6 +8,10 @@ export default function Home(): JSX.Element {
       <Navbar />
       <About />
       <Projects />
+      {/* <Skills /> */}
+      {/* <Experience /> */}
+      {/* <Testimonials /> */}
+      {/* <Contact /> */}
     </div>
   )
 }

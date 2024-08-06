@@ -23,9 +23,8 @@ export default function Navbar(): JSX.Element {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    console.log(windowWidth);
     const sections = ["About", "Projects", "Skills", "Experience", "Testimonials", "Contact"];
-
+    
     // Desktop Navbar
     if (windowWidth >= 1024) {
         return (
