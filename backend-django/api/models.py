@@ -1,15 +1,6 @@
 from django.db import models
 
 # Create your models here.
-class Project(models.Model):
-    title = models.CharField(max_length=100)
-    description = models.TextField(blank=True, null=True, default=None)
-    imageUrl = models.URLField(blank=True, null=True, default=None)
-    linkUrl = models.URLField(blank=True, null=True, default=None)
-
-    def __str__(self):
-        return self.title
-
 class About(models.Model):
     firstName = models.CharField(max_length=100)
     lastName = models.CharField(max_length=100)
@@ -33,12 +24,22 @@ class Experience(models.Model):
 
 class Skill(models.Model):
     name = models.CharField(max_length=100)
-    projects = models.ManyToManyField(Project, blank=True)
+    projects = models.ManyToManyField('Project', blank=True)
     experiences = models.ManyToManyField(Experience, blank=True)
     imageUrl = models.URLField(blank=True, null=True, default=None)
 
     def __str__(self):
         return self.name
+
+class Project(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField(blank=True, null=True, default=None)
+    imageUrl = models.URLField(blank=True, null=True, default=None)
+    linkUrl = models.URLField(blank=True, null=True, default=None)
+    skills = models.ManyToManyField('Skill', blank=True)
+
+    def __str__(self):
+        return self.title
 
 class Education(models.Model):
     degree = models.CharField(max_length=100)

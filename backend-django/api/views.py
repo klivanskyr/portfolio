@@ -1,11 +1,13 @@
 from django.http import JsonResponse, HttpResponse
 from .models import *
 from datetime import datetime
+from rest_framework import generics
+from .serializers import *
 
 # Create your views here.
-def projects(request):
-    projects = list(Project.objects.values())
-    return JsonResponse(projects, safe=False)
+class ProjectsList(generics.ListAPIView):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
 
 def abouts(request):
     abouts = list(About.objects.values())
@@ -13,6 +15,7 @@ def abouts(request):
 
 def experiences(request):
     experiences = list(Experience.objects.values())
+    return JsonResponse(experiences, safe=False)
 
 def skills(request):
     skills = list(Skill.objects.values())

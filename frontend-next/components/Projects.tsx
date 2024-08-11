@@ -8,8 +8,14 @@ import { useEffect, useState } from "react";
 interface ProjectData {
     title: string,
     description: string,
+    skills: SkillsData[],
     imageUrl: string,
     linkUrl: string,
+}
+
+interface SkillsData {
+    name: string,
+    imageUrl: string,
 }
 
 export default function Projects() {
@@ -31,7 +37,9 @@ export default function Projects() {
             console.error(response.error.message);
             return;
         }
-        const data: ProjectData[] = response.data as ProjectData[];
+
+        const data = response.data as ProjectData[];
+
         return data;
     }
 
