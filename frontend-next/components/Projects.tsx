@@ -1,7 +1,7 @@
 'use client';   
 
 import { fetcher } from "@/utils";
-import { Card, CardsCarousel, Searchbar, Item, Filter } from "@/components";
+import { Card, CardsCarousel, Searchbar, Item, Filter, Pill } from "@/components";
 import Image from 'next/image';
 import { useEffect, useState } from "react";
 
@@ -65,6 +65,17 @@ export default function Projects() {
         )
     }
 
+    const footer = (project: ProjectData) => {
+        if (project.skills.length === 0) return <></>;
+        return (
+            <div className="grid max-h-[50px] grid-cols-3 p-1 items-center overflow-y-scroll">
+                {project.skills.map((skill: SkillsData, index: number) => (
+                    <Pill className='max-w-fit min-w-[80px] px-4 m-1 text-center' key={index} text={skill.name} />
+                ))}
+            </div>
+        )
+    }
+
     return (
         <div id="Projects" className='min-w-screen py-4 flex flex-col justify-center items-center'>
             <Searchbar classNames={{ wrapper: 'w-1/2 border border-black rounded-md m-8', input: 'p-2 rounded-md border border-black dark:border-white w-full' }} search={search} setSearch={setSearch} />
@@ -73,10 +84,11 @@ export default function Projects() {
                     <CardsCarousel cards={
                         filteredItems.map((project: Item, index: number) => (
                             <Card 
-                                classNames={{ wrapper: "min-w-[300px] min-h-[200px] w-full h-full" }}
+                                classNames={{ wrapper: "min-w-[300px] max-w-[300px] min-h-[200px] max-h-[300px] w-full h-full" }}
                                 key={index}
                                 header={header(project as ProjectData)}
                                 body={body(project as ProjectData)}
+                                footer={footer(project as ProjectData)}
                             />
                         ))
                     } cardsToDisplay={3} />
