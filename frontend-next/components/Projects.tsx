@@ -1,9 +1,11 @@
 'use client';   
 
-import { fetcher } from "@/utils";
-import { Card, CardsCarousel, Searchbar, Item, Filter, Pill } from "@/components";
+import { Select } from '@mantine/core';
 import Image from 'next/image';
 import { useEffect, useState } from "react";
+
+import { fetcher } from "@/utils";
+import { Card, CardsCarousel, Searchbar, Item, Filter, Pill } from "@/components";
 
 interface ProjectData {
     title: string,
@@ -21,6 +23,7 @@ interface SkillsData {
 export default function Projects() {
     const [projects, setProjects] = useState<ProjectData[]>([]);
     const [search, setSearch] = useState<string>('');
+    const [selectFilter, setSelectFilter] = useState<string | null>(null);
 
     const fetchProjects = async () => {
         const url = `${process.env.NEXT_PUBLIC_DJANGO_API_DOMAIN}/api/projects`;
@@ -76,10 +79,20 @@ export default function Projects() {
         )
     }
 
+    const allSkills = projects.flatMap((project) => project.skills)
+        .filter((skill, index, self) => self.findIndex((s) => s.name === skill.name) === index);
+
     return (
         <div id="Projects" className='min-w-screen py-4 flex flex-col justify-center items-center'>
-            <Searchbar classNames={{ wrapper: 'w-1/2 border border-black rounded-md m-8', input: 'p-2 rounded-md border border-black dark:border-white w-full' }} search={search} setSearch={setSearch} />
-            <Filter search={search} items={projects} filterFields={['title', "description"]}>
+            <div className='flex flex-row w-full justify-center items-center'>
+                <Searchbar classNames={{ wrapper: 'w-1/2 border border-black rounded-md m-8', input: 'p-2 rounded-md border border-black dark:border-white w-full' }} search={search} setSearch={setSearch} />
+                <Select placeholder='Select Skill' data={allSkills.map((skill: SkillsData) => skill.name)} value={selectFilter} onChange={setSelectFilter}/>
+            </div>
+            <Filter search={search} items={
+                selectFilter 
+                    ? projects.filter((project: ProjectData) => project.skills.some((skill: SkillsData) => skill.name.toLowerCase() === selectFilter.toLowerCase()))
+                    : projects
+                } filterFields={['title', "description"]}>
                 {(filteredItems) => (
                     <CardsCarousel cards={
                         filteredItems.map((project: Item, index: number) => (
