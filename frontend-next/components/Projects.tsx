@@ -1,9 +1,9 @@
-'use server';   
+'use client';   
 
 import { fetcher } from "@/utils";
-import { Card, CardsCarousel } from "@/components";
+import { Card, CardsCarousel, Searchbar, Item, Filter } from "@/components";
 import Image from 'next/image';
-import { cache } from "react";
+import { useEffect, useState } from "react";
 
 interface ProjectData {
     title: string,
@@ -12,31 +12,35 @@ interface ProjectData {
     linkUrl: string,
 }
 
-async function fetchAbout(): Promise<ProjectData[] | undefined> {
-    const url = `${process.env.NEXT_PUBLIC_DJANGO_API_DOMAIN}/api/projects`;
-    const params = {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        cache: 'no-cache',
-    };
+export default function Projects() {
+    const [projects, setProjects] = useState<ProjectData[]>([]);
+    const [search, setSearch] = useState<string>('');
 
-    const response = await fetcher(url, params);
-    if ('error' in response) {
-        console.error(response.error.message);
-        return;
+    const fetchProjects = async () => {
+        const url = `${process.env.NEXT_PUBLIC_DJANGO_API_DOMAIN}/api/projects`;
+        const params = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            cache: 'no-cache',
+        };
+    
+        const response = await fetcher(url, params);
+        if ('error' in response) {
+            console.error(response.error.message);
+            return;
+        }
+        const data: ProjectData[] = response.data as ProjectData[];
+        return data;
     }
-    const data: ProjectData[] = response.data as ProjectData[];
-    return data;
-}
 
-export default async function Projects() {
-    const projects = await fetchAbout();
-
-    if (!projects) {
-        return <div></div>;
-    }
+    useEffect(() => {
+        fetchProjects().then((data) => {
+            if (!data) return;
+            setProjects(data);
+        });
+    }, []);
 
     const header = (project: ProjectData) => (
         <div className='text-center py-1'>
@@ -52,17 +56,24 @@ export default async function Projects() {
                 : undefined
         )
     }
-        
+
     return (
-        <div id="Projects" className='border-2 min-w-screen min-h-screen'>
-            <CardsCarousel cards={projects.map((project: ProjectData, index: number) => (
-                <Card 
-                    classNames={{ wrapper: "min-w-[300px] min-h-[200px]" }}
-                    key={index}
-                    header={header(project)}
-                    body={body(project)}
-                />
-            ))} />
+        <div id="Projects" className='min-w-screen py-4 flex flex-col justify-center items-center'>
+            <Searchbar classNames={{ wrapper: 'w-1/2 border border-black rounded-md m-8', input: 'p-2 rounded-md border border-black dark:border-white w-full' }} search={search} setSearch={setSearch} />
+            <Filter search={search} items={projects} filterFields={['title', "description"]}>
+                {(filteredItems) => (
+                    <CardsCarousel cards={
+                        filteredItems.map((project: Item, index: number) => (
+                            <Card 
+                                classNames={{ wrapper: "min-w-[300px] min-h-[200px] w-full h-full" }}
+                                key={index}
+                                header={header(project as ProjectData)}
+                                body={body(project as ProjectData)}
+                            />
+                        ))
+                    } cardsToDisplay={3} />
+                )}
+            </Filter>
         </div>
     )
 }

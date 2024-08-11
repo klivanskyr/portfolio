@@ -7,8 +7,8 @@ interface CardProps {
 
 export default function Card({ classNames, header, body, footer }: CardProps) {
     return (
-        <div className={`${classNames?.wrapper || ''} max-w-fit rounded-lg shadow-2xl drop-shadow-2xl overflow-hidden`}>
-            {header && <div className={`${classNames?.header || ''} rounded-t-md rounded-r-sm rounded-l-sm border-b-[1px]`}>
+        <div className={`${classNames?.wrapper || ''} max-w-fit rounded-lg overflow-hidden shadow-extralarge p-1 dark:border dark:border-white`}>
+            {header && <div className={`${classNames?.header || ''} rounded-t-md rounded-r-sm rounded-l-sm`}>
                 {header}
             </div>}
             {body && <div className={classNames?.body || ''}>

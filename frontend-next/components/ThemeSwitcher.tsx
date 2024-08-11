@@ -11,7 +11,7 @@ export default function ThemeSwitcher() {
     return (
         <ActionIcon variant='outline' aria-label='ThemeSwitcher'>
             {theme === 'dark'
-                ?   <SunIcon className={`${className} h-[30px] w-[30px]`} onClick={() => setTheme('light')} />
+                ?   <SunIcon className={`${className} h-[27px] w-[27px]`} onClick={() => setTheme('light')} />
                 :   <MoonIcon className={`${className} h-[27px] w-[27px]`} onClick={() => setTheme('dark')} />
             }
         </ActionIcon>

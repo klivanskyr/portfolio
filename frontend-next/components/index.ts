@@ -6,3 +6,6 @@ export { default as Projects } from "./Projects";
 export { default as Card} from "./Card";
 export { default as CardsCarousel } from "./CardsCarousel";
 export { default as Skills } from "./Skills";
+export { default as Filter } from "./Filter";
+export type { Item } from "./Filter";
+export { default as Searchbar } from "./Searchbar";

@@ -9,7 +9,7 @@ import { CloseIcon, MenuIcon } from "@/assets";
 
 export default function Navbar(): JSX.Element {
     const [open, setOpen] = useState<boolean>(false);
-    const [windowWidth, setWindowWidth] = useState<number>(0);
+    const [windowWidth, setWindowWidth] = useState<number>(1024);
 
     useEffect(() => {
         function handleResize() {

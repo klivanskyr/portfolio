@@ -1,35 +1,59 @@
 'use client';
 
-import { Button } from "@mantine/core";
-import { useState } from "react";
+import { useState } from 'react';
 
-export default function CardCarousel({ cards }: { cards: JSX.Element[] }) {
-  const [page, setPage] = useState<number>(1);
+import { LeftIconBlack, LeftIconWhite, RightIconBlack, RightIconWhite } from '@/assets'
+import { useTheme } from 'next-themes';
 
-  function decrementPage() {
-    if (page - 1 === 0) {
-      setPage(1);
-    } else {
-      setPage(page - 1);
-    }
-  }
 
-  function incrementPage() {
-    setPage(page + 1);
-  }
+interface CardsCarouselProps {
+	cards: JSX.Element[],
+	cardsToDisplay?: number
+}
 
-  return (
-    <div>
-      <div className="flex flex-row max-w-screen overflow-clip">
-        {cards.map((card, i) => 
-          <div className='mx-2' key={i}>{card}</div>
-        )}
-      </div>
-      <div className="flex flex-row">
-        <Button className="m-1" onClick={decrementPage}>{"<"}</Button>
-        <p className="m-1">{page}</p>
-        <Button className="m-1" onClick={incrementPage}>{">"}</Button>
-      </div>
-    </div>
-  )
+export default function CardsCarousel({ cards, cardsToDisplay=3 }: CardsCarouselProps) {
+	const { theme, setTheme } = useTheme();
+	const [currentPage, setCurrentPage] = useState<number>(1);
+	const totalPages = Math.ceil(cards.length / cardsToDisplay);
+	const visableCards = cards.slice((currentPage - 1) * cardsToDisplay, currentPage * cardsToDisplay);
+
+	function prevPage() {
+		if (currentPage > 1) {
+			setCurrentPage(currentPage - 1);
+		} else {
+			setCurrentPage(totalPages);
+		}
+	}
+
+	function nextPage() {
+		if (currentPage < totalPages) {
+			setCurrentPage(currentPage + 1);
+		} else {
+			setCurrentPage(1);
+		}
+	}
+
+	return (
+		<div className='flex flex-row justify-center items-center gap-4 relative min-w-[932px] min-h-[275px]'>
+			<div className='absolute -left-[35px] w-fit h-fit'>
+				{theme === 'dark' 
+					? <LeftIconWhite className='h-5 w-5 fill-white' onClick={prevPage} />
+					: <LeftIconBlack className='h-5 w-5 fill-black' onClick={prevPage} />
+				}
+			</div>
+			<div className='grid grid-flow-col grid-cols-3 gap-4 w-fit'>
+				{visableCards.map((card, index) => (
+					<div key={index} className={`w-[${100 / cardsToDisplay}%] h-[275px]`}>
+						{card}
+					</div>
+				))}
+			</div>
+			<div className='absolute -right-[35px] w-fit h-fit'>
+				{theme === 'dark'
+					? <RightIconWhite className='h-5 w-5 fill-white' onClick={nextPage} />
+					: <RightIconBlack className='h-5 w-5 fill-black' onClick={nextPage} />
+				}
+			</div>
+		</div>
+	)
 }

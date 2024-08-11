@@ -6,12 +6,14 @@
 
 :root {
   --bg-color: white;
+  --bg-secondary-color: rgb(245, 245, 245);
   --text-color: black;
   --border-color: black;
 }
 
 .dark {
   --bg-color: #1a1a1a;
+  --bg-secondary-color: #2d2d2d;
   --text-color: white;
   --border-color: white;
 }
@@ -20,4 +22,32 @@ body {
   background-color: var(--bg-color);
   color: var(--text-color);
   border-color: var(--border-color);
+}
+
+.bg-primary {
+  background-color: var(--bg-color);
+}
+
+.bg-secondary {
+  background-color: var(--bg-secondary-color);
+}
+
+.shadow-small {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.shadow-medium {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.10);
+}
+
+.shadow-large {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+
+.shadow-extralarge {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.20);
+}
+
+.shadow-2extralarge {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
 }
