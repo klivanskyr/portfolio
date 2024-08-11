@@ -10,3 +10,4 @@ export { default as Filter } from "./Filter";
 export type { Item } from "./Filter";
 export { default as Searchbar } from "./Searchbar";
 export { default as Pill } from "./Pill";
+export { default as Contact } from "./Contact";

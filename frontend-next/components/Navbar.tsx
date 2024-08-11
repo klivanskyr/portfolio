@@ -32,7 +32,7 @@ export default function Navbar(): JSX.Element {
                 <NavLink className='min-w-[100px]' href='#' label='Ryan Klivansky' />
                 <div className="px-[60px] flex flex-row justify-evenly">
                     {sections.map(section => (
-                        <NavLink className='mx-6' key={section} href={`#${section.toLowerCase()}`} label={section} />
+                        <NavLink className='mx-6' key={section} href={`#${section}`} label={section} />
                     ))}
                 </div>
                 <ThemeSwitcher />

@@ -1,6 +1,6 @@
 'use server';
 
-import { Navbar, About, Projects, Skills } from "@/components";
+import { Navbar, About, Projects, Skills, Contact } from "@/components";
 
 export default async function Home() {
   return (
@@ -8,10 +8,10 @@ export default async function Home() {
       <Navbar />
       <About />
       <Projects />
-      <Skills />
+      {/* <Skills /> */}
       {/* <Experience /> */}
       {/* <Testimonials /> */}
-      {/* <Contact /> */}
+      <Contact />
     </div>
   )
 }
