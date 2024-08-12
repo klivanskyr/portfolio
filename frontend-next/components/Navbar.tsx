@@ -29,7 +29,9 @@ export default function Navbar(): JSX.Element {
     if (windowWidth >= 1024) {
         return (
             <div className='flex flex-row w-full p-4 justify-between items-center shadow-md dark:border-b dark:border-slate-600'>
-                <NavLink className='min-w-[100px]' href='#' label='Ryan Klivansky' />
+                <div className="max-w-fit">
+                    <NavLink className='min-w-[100px]' href='#' label='Ryan Klivansky' />
+                </div>
                 <div className="px-[60px] flex flex-row justify-evenly">
                     {sections.map(section => (
                         <NavLink className='mx-6' key={section} href={`#${section}`} label={section} />
