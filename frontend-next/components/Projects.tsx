@@ -85,8 +85,8 @@ export default function Projects() {
     return (
         <div id="Projects" className='min-w-screen py-4 flex flex-col justify-center items-center'>
             <div className='flex flex-row w-full justify-center items-center'>
-                <Searchbar classNames={{ wrapper: 'w-1/2 border border-black rounded-md m-8', input: 'p-2 rounded-md border border-black dark:border-white w-full' }} search={search} setSearch={setSearch} />
-                <Select placeholder='Select Skill' data={allSkills.map((skill: SkillsData) => skill.name)} value={selectFilter} onChange={setSelectFilter}/>
+                <Searchbar classNames={{ wrapper: 'w-1/2 border border-gray-300 rounded-md m-8', input: 'p-2 rounded-md border border-gray-300 dark:border-white w-full' }} search={search} setSearch={setSearch} />
+                <Select variant='default' radius='md' size='md' classNames={{ option: 'p-1' }} placeholder='Select Skill' data={allSkills.map((skill: SkillsData) => skill.name)} value={selectFilter} onChange={setSelectFilter}/>
             </div>
             <Filter search={search} items={
                 selectFilter 
